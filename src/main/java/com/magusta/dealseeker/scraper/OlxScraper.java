@@ -137,7 +137,7 @@ public class OlxScraper {
 
         Elements offersTitles = page.select("table#offers_table .lheight22.margintop5");
         Elements offersPrices = page.select("table#offers_table td.wwnormal.tright.td-price");
-        Elements offersUrls = page.select("table#offers_table a.marginright5.link.linkWithHash.detailsLink");
+        Elements offersUrls = page.select("table#offers_table h3.lheight22.margintop5 > a");
         //Elements offersTimes = page.select("table#offers_table small.breadcrumb.x-normal > span");
         Elements offersIds = page.select("table#offers_table div.offer-wrapper > table");
 

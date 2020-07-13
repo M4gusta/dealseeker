@@ -28,7 +28,7 @@ public class OfferDaoImpl implements OfferDao {
     private static final String
             getAllOffersIds = "SELECT offer_id FROM offers";
     private static final String
-            deleteNulls = "DELETE FROM offers WHERE url = null AND search_id = ?";
+            deleteNulls = "DELETE FROM offers WHERE url IS NULL AND search_id = ?";
 
     @Override
     public Offer getOfferById(int id) {
