@@ -41,6 +41,9 @@ public class OlxScraper {
 
         }
     }*/
+    /*
+    * Create search after first searching from new url
+    * */
     protected void createSearchForFuture(String url) throws SQLException, IOException {
         String searchName = findName(url);
         Search search = new Search(url, searchName);
@@ -49,8 +52,6 @@ public class OlxScraper {
         int searchId = searchDao.getSearchId(url);
         for (int i: searchIds){
             offerDao.insertOfferIdAndSearchId(i, searchId);
-            System.out.println("Print last 3 ids:");
-            System.out.println(i);
         }
 
     }
@@ -117,6 +118,9 @@ public class OlxScraper {
         return numberOfPages;
     }*/
 
+    /*
+    * Find 3 last offers ids
+    * */
     private ArrayList<Integer> findLastIds(String url) throws IOException {
         ArrayList<Integer> lastThreeIds= new ArrayList<>();
         Document page = JSoupController.controller(url);

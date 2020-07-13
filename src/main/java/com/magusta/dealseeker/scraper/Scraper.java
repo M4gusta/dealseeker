@@ -20,6 +20,7 @@ public class Scraper {
 
     public void checkIfThereIsAnyDataInDB() throws SQLException, IOException {
         if (CheckTables.checkTables()) {
+            //Looking for saved searches
             ArrayList<Search> searches = searchDao.getAllSearches();
             if (searches.size() > 0) {
                 dataIsPresent(searches);
@@ -30,6 +31,22 @@ public class Scraper {
                 checkUrl(inputUrl());
             }
     }
+
+    private String inputUrl() throws IOException {
+        System.out.println("Input url:");
+
+        return reader.readLine();
+    }
+
+    private void checkUrl(String url) throws SQLException, IOException {
+        if (url.contains("olx")) {
+            olxScraper.createSearchForFuture(url);
+            System.out.println("Done for now!");
+        }
+    }
+    /*
+    * If saved searches found
+    * */
     private void dataIsPresent(ArrayList<Search> searches) throws IOException, SQLException {
         System.out.println("Choose which search you want to check:");
         int i = 1;
@@ -51,15 +68,8 @@ public class Scraper {
 
             ArrayList<Offer> offerArrayList = olxScraper.findNewOffers(searchUrl, searchId, getThreeNewestOffersIds(searchId));
             showNewOffers(offerArrayList);
+            // Delete first offers with only id from search
             offerDao.deleteOffersWithNulls(searchId);
-        }
-    }
-
-    private void showNewOffers(ArrayList<Offer> offers){
-        int i = 1;
-        for (Offer offer: offers){
-            System.out.println(i + ". " + offer.toString());
-            i++;
         }
     }
 
@@ -71,20 +81,17 @@ public class Scraper {
         }
         return offersIds;
     }
-
-
-    private String inputUrl() throws IOException {
-        System.out.println("Input url:");
-
-        return reader.readLine();
-    }
-
-    public void checkUrl(String url) throws SQLException, IOException {
-        if (url.contains("olx")) {
-            olxScraper.createSearchForFuture(url);
-            System.out.println("Done for now!");
+    private void showNewOffers(ArrayList<Offer> offers){
+        int i = 1;
+        for (Offer offer: offers){
+            System.out.println(i + ". " + offer.toString());
+            i++;
         }
     }
+
+
+
+
 }
 
 
